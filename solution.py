@@ -641,16 +641,19 @@ def train_cifar10_model(x_train, y_train, x_valid, y_valid):
     loss = CategoricalCrossentropy()
     model = Model(loss, optimizer=optimizer)
 
-    # 2) Add layers to the model
-    #   (don't forget to specify the input shape for the first layer)
-    model.add(Conv2D(output_channels=64, input_shape=(3,32,32)))
+    model.add(Conv2D(output_channels=16, input_shape=(3,32,32)))
     model.add(ReLU())
-    model.add(Pooling2D()) # 32x32->16x16
+    model.add(Pooling2D()) 
     model.add(BatchNorm())
 
-    model.add(Conv2D(output_channels=32)) # nx15x16x16
-    model.add(ReLU())
-    model.add(Pooling2D()) #nx15x8x8
+    model.add(Conv2D(output_channels=24)) 
+    model.add(ReLU())    
+    model.add(Pooling2D())
+    model.add(BatchNorm())
+
+    model.add(Conv2D(output_channels=32)) 
+    model.add(ReLU())    
+    model.add(Pooling2D())
     model.add(BatchNorm())
     model.add(Flatten())
 
@@ -669,9 +672,9 @@ def train_cifar10_model(x_train, y_train, x_valid, y_valid):
     print(model)
 
     # 3) Train and validate the model using the provided data
-    model.fit(x_train, y_train, batch_size=32, epochs=8, shuffle=False, verbose=True, x_valid=x_valid, y_valid=y_valid)
+    model.fit(x_train, y_train, batch_size=32, epochs=6, shuffle=False, verbose=True, x_valid=x_valid, y_valid=y_valid)
 
-    # your code here /\
+    
     return model
 
 
